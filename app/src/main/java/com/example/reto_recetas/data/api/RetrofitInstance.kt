@@ -27,4 +27,7 @@ object RetrofitInstance {
             }.build()).build()
 
     }
+
+
+    val recipesApi : RecipesApi = getInstance().create(RecipesApi::class.java)
 }
