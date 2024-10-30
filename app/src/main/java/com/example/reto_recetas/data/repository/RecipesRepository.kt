@@ -7,6 +7,6 @@ import retrofit2.Response
 class RecipesRepository {
 
     suspend fun getRecipes(page : Int) : Response<RecipesResult>{
-        return RetrofitInstance.recipesApi.getRecipes(page)
+        return RetrofitInstance.recipesApi.getRecipes()
     }
 }

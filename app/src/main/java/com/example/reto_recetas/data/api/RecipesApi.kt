@@ -9,10 +9,8 @@ import retrofit2.http.Query
 
 interface RecipesApi {
 
-    @GET("")
-    suspend fun getRecipes(
-        @Query("page") page: Int
-    ): Response<RecipesResult>
+    @GET("listRecipes")
+    suspend fun getRecipes(): Response<RecipesResult>
 
 
 }

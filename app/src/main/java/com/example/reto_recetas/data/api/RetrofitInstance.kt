@@ -5,26 +5,15 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-
-
     val token = ""
-    private const val baseURL = ""
+    private const val baseURL = "http://demo4755037.mockable.io/"
 
     private fun getInstance(): Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(baseURL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(OkHttpClient.Builder().addInterceptor {
-                chain ->
-                val request = chain
-                    .request()
-                    .newBuilder()
-                    .addHeader("",token)
-                    .build()
-
-                chain.proceed(request)
-            }.build()).build()
+            .build()
 
     }
 

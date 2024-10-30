@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 
 class RecipeViewModel : ViewModel() {
 
-
     val token = ""
     private val repository  = RecipesRepository()
     var state by mutableStateOf(ScreenState())
