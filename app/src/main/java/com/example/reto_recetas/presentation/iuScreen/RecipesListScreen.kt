@@ -70,9 +70,7 @@ fun RecipesListScreen(navController: NavHostController){
                     ),
                 content = {
                     items(state.recipes.size) {
-                        if (it >= state.recipes.size - 1 && !state.endReached && !state.isLoading) {
-                            //movieViewModel.loadNextItems()
-                        }
+
                         ItemUi(
                             itemIndex = it,
                             recipesList = state.recipes,

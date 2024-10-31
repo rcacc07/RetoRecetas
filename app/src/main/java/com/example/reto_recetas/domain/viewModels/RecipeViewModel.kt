@@ -16,6 +16,10 @@ class RecipeViewModel : ViewModel() {
     var state by mutableStateOf(ScreenState())
 
     init {
+        loadNextItems()
+    }
+
+    fun loadNextItems(){
         viewModelScope.launch {
             repository.getRecipes(1)
         }
