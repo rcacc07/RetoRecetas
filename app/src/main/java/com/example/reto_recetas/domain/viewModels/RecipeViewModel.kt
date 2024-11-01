@@ -19,9 +19,20 @@ class RecipeViewModel : ViewModel() {
         loadNextItems()
     }
 
-    fun loadNextItems(){
+    private fun loadNextItems(){
         viewModelScope.launch {
-            repository.getRecipes(1)
+            state = state.copy(
+                isLoading = true
+            )
+
+            val response = repository.getRecipes(1)
+
+            if (response.isSuccessful){
+                state = state.copy(
+                    isLoading = false,
+                    recipes = response.body()!!.result
+                )
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Card
@@ -55,11 +56,22 @@ fun RecipesListScreen(navController: NavHostController){
 
     val movieViewModel = viewModel<RecipeViewModel>()
     val state = movieViewModel.state
+
     Scaffold(
         modifier = Modifier.background(Color.Transparent),
         topBar = {
             TopBar()
         }, content = { paddingValues ->
+
+            if(state.isLoading){
+                Box(modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center){
+
+                    CircularProgressIndicator()
+                }
+
+            }
+
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 Modifier
@@ -70,26 +82,13 @@ fun RecipesListScreen(navController: NavHostController){
                     ),
                 content = {
                     items(state.recipes.size) {
-
                         ItemUi(
                             itemIndex = it,
                             recipesList = state.recipes,
                             navController = navController
                         )
                     }
-                    item(state.isLoading) {
-                        Row(
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CircularProgressIndicator(color = ProgressIndicatorDefaults.circularColor)
-                        }
-                        if (!state.error.isNullOrEmpty()){
-                            Toast.makeText(LocalContext.current, state.error, Toast.LENGTH_SHORT).show()
-                        }
-                    }
+
                 }
             )
         },
@@ -106,21 +105,21 @@ fun ItemUi(itemIndex: Int, recipesList: List<RecipeDTO>, navController: NavHostC
             .wrapContentSize()
             .padding(10.dp)
             .clickable {
-                navController.navigate("Details screen/${recipesList[itemIndex].id}")
+                //navController.navigate("Details screen/${recipesList[itemIndex].id}")
             },
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-            /*
+
             AsyncImage(
-                model = "https://image.tmdb.org/t/p/w500"+movieList[itemIndex].poster_path,
-                contentDescription = movieList[itemIndex].title,
+                model = recipesList[itemIndex].urlImage,
+                contentDescription = "",
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(10.dp)),
                 contentScale = ContentScale.Crop
             )
-            */
+
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -128,7 +127,7 @@ fun ItemUi(itemIndex: Int, recipesList: List<RecipeDTO>, navController: NavHostC
                     .padding(6.dp)
             ) {
                 Text(
-                    text = recipesList[itemIndex].nombre,
+                    text = recipesList[itemIndex].name,
                     modifier = Modifier
                         .fillMaxWidth()
                         .basicMarquee(),
